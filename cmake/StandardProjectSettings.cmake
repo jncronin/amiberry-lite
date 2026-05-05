@@ -34,6 +34,10 @@ elseif(CMAKE_BUILD_TYPE)
     add_compile_options("-O1")
 endif()
 
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "^arm")
+    add_compile_options("-mno-unaligned-access")
+endif ()
+
 # Platform-specific linker flags
 if(NOT CMAKE_SYSTEM_NAME MATCHES "Darwin")
     add_link_options("-Wl,--no-undefined" "-Wl,-z,combreloc" "-Wl,--as-needed")
