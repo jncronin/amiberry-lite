@@ -9,7 +9,7 @@
 #include "uae/mman.h"
 #include <sys/mman.h>
 #include "sys/types.h"
-#ifndef __MACH__
+#if !defined(__MACH__) && !defined(__GAMEKID__)
 #include "sys/sysinfo.h"
 #endif
 
@@ -61,7 +61,7 @@ void free_AmigaMem(void)
 
 bool can_have_1gb()
 {
-#ifndef __MACH__
+#if !defined(__MACH__) && !defined(__GAMEKID__)
 	struct sysinfo mem_info {};
 	sysinfo(&mem_info);
 	long long total_phys_mem = mem_info.totalram;
@@ -69,6 +69,8 @@ bool can_have_1gb()
 	// Do we have more than 2GB in the system?
 	if (total_phys_mem > 2147483648LL)
 		return true;
+	return false;
+#elif defined(__GAMEKID__)
 	return false;
 #else
 	// On OSX just return true, there's no M1 mac with less than 8G of RAM
@@ -148,7 +150,12 @@ void alloc_AmigaMem(void)
 
 	// Next attempt: allocate huge memory block for entire area
 	natmem_size = ADDITIONAL_MEMSIZE + 256 * 1024 * 1024;
+#ifdef __GAMEKID__
+	auto mmap_ret = mmap(nullptr, natmem_size + BARRIER, PROT_READ | PROT_WRITE, MAP_ANON, 0, 0);
+	regs.natmem_offset = (mmap_ret == MAP_FAILED) ? nullptr : static_cast<uae_u8*>(mmap_ret);
+#else
 	regs.natmem_offset = static_cast<uae_u8*>(valloc(natmem_size + BARRIER));
+#endif
 	if (regs.natmem_offset)
 	{
 		// Allocation successful
@@ -165,7 +172,12 @@ void alloc_AmigaMem(void)
 
 	// No mem for Z3 or RTG at all
 	natmem_size = 16 * 1024 * 1024;
+#ifdef __GAMEKID__
+	mmap_ret = mmap(nullptr, natmem_size + BARRIER, PROT_READ | PROT_WRITE, MAP_ANON, 0, 0);
+	regs.natmem_offset = (mmap_ret == MAP_FAILED) ? nullptr : static_cast<uae_u8*>(mmap_ret);
+#else
 	regs.natmem_offset = static_cast<uae_u8*>(valloc(natmem_size + BARRIER));
+#endif
 
 	if (!regs.natmem_offset)
 	{

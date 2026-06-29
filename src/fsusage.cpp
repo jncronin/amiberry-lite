@@ -105,14 +105,17 @@ int statfs ();
 # include <sys/param.h>
 #endif
 
+#ifndef __GAMEKID__
 #if HAVE_SYS_MOUNT_H
 # include <sys/mount.h>
+#endif
 #endif
 
 #if defined(__linux__)
 #include <sys/vfs.h>
 #elif defined(__FreeBSD__) || defined(__APPLE__)
 #include <sys/mount.h>
+#elif defined(__GAMEKID__)
 #else
 #error "Filesystem header not supported on this platform"
 #endif
@@ -133,6 +136,7 @@ int statfs ();
 #include <sys/statfs.h>
 #elif defined(__FreeBSD__) || defined(__APPLE__)
 #include <sys/mount.h>
+#elif defined(__GAMEKID__)
 #else
 #error "Platform not supported for filesystem stats"
 #endif

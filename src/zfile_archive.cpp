@@ -51,6 +51,7 @@ static time_t fromdostime (uae_u32 dd)
 	t -= timezone;
 	if (daylight)
 		t -= 3600;
+#elif defined(__GAMEKID__)
 #else
 	struct tm *lt = localtime(&t);
 	t -= lt->tm_gmtoff;
@@ -346,6 +347,7 @@ struct zvolume *archive_directory_tar (struct zfile *z)
 			zai.tv.tv_sec += timezone;
 			if (daylight)
 				zai.tv.tv_sec -= 3600;
+#elif defined(__GAMEKID__)
 #else
 			auto sec = static_cast<time_t>(zai.tv.tv_sec);
 			struct tm *lt = localtime(&sec);
@@ -781,6 +783,7 @@ struct zvolume *archive_directory_7z (struct zfile *z)
     			zai.tv.tv_sec -= timezone;
     			if (daylight)
         			zai.tv.tv_sec += 3600;
+			#elif defined(__GAMEKID__)
 			#else
     			time_t sec = (time_t)zai.tv.tv_sec;
 			struct tm *lt = localtime(&sec);

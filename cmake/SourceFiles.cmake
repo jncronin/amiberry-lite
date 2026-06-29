@@ -383,7 +383,7 @@ if (CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "
             src/jit/compemu_fpp.cpp
             src/jit/compemu_support.cpp
     )
-    if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    if (CMAKE_SYSTEM_NAME STREQUAL "Linux" OR GAMEKID)
         target_sources(${PROJECT_NAME} PRIVATE src/osdep/aarch64_helper.s)
     endif ()
 elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "arm")

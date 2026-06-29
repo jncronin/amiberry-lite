@@ -108,3 +108,11 @@ add_subdirectory(packaging)
 if(TARGET amiberry AND CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
     target_link_libraries(amiberry PRIVATE ${LIBUSB_LIBRARY} serialport ${EXTRA_LIBS})
 endif()
+
+if(GAMEKID)
+	target_link_libraries(${PROJECT_NAME} PRIVATE
+		iconv
+		freetype
+		ogg
+	)
+endif()

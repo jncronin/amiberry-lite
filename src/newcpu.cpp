@@ -2844,10 +2844,12 @@ static int do_specialties (int cycles)
 
 	isstopped:
 		check_uae_int_request();
+#ifndef __GAMEKID__
 		{
 			if (bsd_int_requested)
 				bsdsock_fake_int_handler ();
 		}
+#endif
 
 		if (cpu_tracer > 0) {
 			cputrace.stopped = regs.stopped;

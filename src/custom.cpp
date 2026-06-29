@@ -5665,11 +5665,13 @@ void rethink_uae_int(void)
 		}
 	}
 
+#ifndef __GAMEKID__
 	extern void bsdsock_fake_int_handler(void);
 	extern int volatile bsd_int_requested;
 	if (bsd_int_requested) {
 		bsdsock_fake_int_handler();
 	}
+#endif
 	if (irq6) {
 		safe_interrupt_set(IRQ_SOURCE_UAE, 0, true);
 	}

@@ -64,6 +64,7 @@ static void getconsole()
 	// Set the console input/output code page to UTF-8
 	setlocale(LC_ALL, "en_US.UTF-8");
 
+#ifndef __GAMEKID__
 	// Get the console window size
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws);
 
@@ -73,6 +74,7 @@ static void getconsole()
 		ws.ws_row = 5000;
 		ioctl(STDOUT_FILENO, TIOCSWINSZ, &ws);
 	}
+#endif
 }
 
 void activate_console()

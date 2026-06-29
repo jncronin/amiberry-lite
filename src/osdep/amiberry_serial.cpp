@@ -145,6 +145,7 @@ int shmem_serial_state()
 
 void shmem_serial_delete()
 {
+#ifndef __GAMEKID__
 	sermap_deactivate();
 	sermap_master = false;
 	if (sermap_data) {
@@ -156,11 +157,15 @@ void shmem_serial_delete()
 	sermap_data = nullptr;
 	sermap_handle = nullptr;
 	sermap1 = sermap2 = nullptr;
+#endif
 }
 
 
 bool shmem_serial_create()
 {
+#ifdef __GAMEKID__
+	return false;
+#else
 	shmem_serial_delete();
 
 	int fd = shm_open(SER_MEMORY_MAPPING, O_RDWR, 0666);
@@ -209,6 +214,7 @@ bool shmem_serial_create()
 	}
 
 	return true;
+#endif
 }
 
 #endif

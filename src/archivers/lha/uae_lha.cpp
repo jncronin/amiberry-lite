@@ -42,6 +42,8 @@ struct zvolume *archive_directory_lha (struct zfile *zf)
 		if (hdr.extend_type != 0) {
 		#if defined(__linux__)
 			zai.tv.tv_sec = hdr.unix_last_modified_stamp -= _timezone;
+		#elif defined(__GAMEKID__)
+			zai.tv.tv_sec = hdr.unix_last_modified_stamp;
 		#else
 			time_t sec = (time_t)hdr.unix_last_modified_stamp;
 			struct tm *lt = localtime(&sec);
@@ -62,6 +64,8 @@ struct zvolume *archive_directory_lha (struct zfile *zf)
 			t.tm_year = ((v >> 25) & 0x7f) + 80;
 			#if defined(__linux__)
 			zai.tv.tv_sec = mktime (&t) - _timezone;
+			#elif defined(__GAMEKID__)
+			zai.tv.tv_sec = mktime(&t);
 			#else
 			time_t local = mktime(&t);
 			struct tm *lt = localtime(&local);

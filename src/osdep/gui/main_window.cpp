@@ -1313,5 +1313,7 @@ void run_gui()
 	}
 
 	// Reset counter for access violations
+#ifndef __GAMEKID__
 	init_max_signals();
+#endif
 }

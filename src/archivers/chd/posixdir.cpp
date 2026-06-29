@@ -69,7 +69,7 @@ namespace osd {
 		constexpr char PATHSEPCH = '/';
 #endif
 
-#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__bsdi__) || defined(__DragonFly__) || defined(__EMSCRIPTEN__) || defined(__ANDROID__) || defined(_WIN32) || defined(SDLMAME_NO64BITIO)
+#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__bsdi__) || defined(__DragonFly__) || defined(__EMSCRIPTEN__) || defined(__ANDROID__) || defined(_WIN32) || defined(SDLMAME_NO64BITIO) || defined(__GAMEKID__)
 		using sdl_dirent = struct dirent;
 		using sdl_stat = struct stat;
 #define sdl_readdir readdir

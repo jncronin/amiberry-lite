@@ -22,6 +22,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+#ifndef __GAMEKID__
+
 #include "sysconfig.h"
 #include "sysdeps.h"
 
@@ -2542,3 +2544,5 @@ uae_u32 host_gethostname(TrapContext *ctx, uae_u32 name, uae_u32 namelen)
 	trap_get_string(ctx, buf, name, sizeof buf);
 	return gethostname(buf, namelen);
 }
+
+#endif // !defined(__GAMEKID__)

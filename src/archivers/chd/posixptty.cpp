@@ -19,6 +19,8 @@
 #include <unistd.h>
 #include <cstdlib>
 
+#ifndef __GAMEKID__
+
 #if defined(__FreeBSD__) || defined(__DragonFly__)
 #include <termios.h>
 #include <libutil.h>
@@ -193,3 +195,5 @@ std::error_condition posix_open_ptty(std::uint32_t openflags, osd_file::ptr& fil
 	}
 #endif // defined(__ANDROID__)
 }
+
+#endif // !defined(__GAMEKID__)

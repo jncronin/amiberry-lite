@@ -393,6 +393,7 @@ struct ShellSession {
 #if !defined(_WIN32)
 #if defined(__APPLE__) || defined(__FreeBSD__)
 #include <util.h>
+#elif defined(__GAMEKID__)
 #else
 #include <pty.h>
 #endif
@@ -407,7 +408,7 @@ static uae_u32 uaelib_host_open(TrapContext* ctx, uaecptr command)
 	if (trap_get_string(ctx, cmd, command, sizeof cmd) >= sizeof cmd)
 		return 0;
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__GAMEKID__)
 	// Not supported on Windows yet
 	return 0;
 #else

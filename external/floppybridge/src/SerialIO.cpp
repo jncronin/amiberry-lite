@@ -40,7 +40,7 @@ DEFINE_GUID(GUID_DEVINTERFACE_COMPORT,0x86e0d1e0, 0x8089, 0x11d0, 0x9c, 0xe4, 0x
 #endif
 
 // OS X, sigurbjornl, 20220208
-#elif defined __MACH__ || defined(__FreeBSD__)
+#elif defined __MACH__ || defined(__FreeBSD__) || defined(__GAMEKID__)
 
 #include <sys/stat.h>
 #include <dirent.h>
@@ -49,7 +49,11 @@ DEFINE_GUID(GUID_DEVINTERFACE_COMPORT,0x86e0d1e0, 0x8089, 0x11d0, 0x9c, 0xe4, 0x
 #include <sys/ioctl.h>
 #include <cerrno>
 #include <cstring>
+#ifndef __GAMEKID__
 #include <term.h>
+#else
+#include <limits.h>
+#endif
 #include <termios.h>
 #ifdef __MACH__
 #include <IOKit/serial/ioss.h> // Only available on macOS

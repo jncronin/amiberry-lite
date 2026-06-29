@@ -36,9 +36,9 @@
 #endif
 #include "uae.h"
 
-#if !defined(__MACH__) && !defined(CPU_AMD64) && !defined(__x86_64__) && !defined(__riscv)
+#if !defined(__MACH__) && !defined(CPU_AMD64) && !defined(__x86_64__) && !defined(__riscv) && !defined(__GAMEKID__)
 #include <asm/sigcontext.h>
-#else
+#elif !defined(__GAMEKID__)
 #include <sys/ucontext.h>
 #endif
 #include <csignal>
@@ -63,6 +63,7 @@ extern void invalidate_block(blockinfo* bi);
 extern void raise_in_cl_list(blockinfo* bi);
 #endif
   
+#ifndef __GAMEKID__
 
 #define SHOW_DETAILS 2
 
@@ -994,3 +995,5 @@ void signal_term(int signum, siginfo_t* info, void* ptr)
 	SDL_Quit();
 	exit(1);
 }
+
+#endif

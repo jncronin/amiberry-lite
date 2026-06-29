@@ -83,6 +83,7 @@ uae_socket uae_tcp_listen(const TCHAR *host, const TCHAR *port, int flags)
 		goto fail;
 	}
 
+#ifndef __GAMEKID__
 	if (flags & UAE_SOCKET_LINGER) {
 		constexpr struct linger l = { 1, 1 };
 		err = setsockopt(s, SOL_SOCKET, SO_LINGER, (char *) &l, sizeof(l));
@@ -92,6 +93,7 @@ uae_socket uae_tcp_listen(const TCHAR *host, const TCHAR *port, int flags)
 			goto fail;
 		}
 	}
+#endif
 	if (flags & UAE_SOCKET_REUSEADDR) {
 		constexpr int o = 1;
 		err = setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (char *) &o, sizeof(o));

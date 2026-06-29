@@ -8,6 +8,8 @@
 * Library initialization code (c) Tauno Taipaleenmaki
 */
 
+#ifndef __GAMEKID__
+
 #include "sysconfig.h"
 #include "sysdeps.h"
 
@@ -2039,3 +2041,5 @@ void bsdlib_install (void)
 }
 
 #endif /* ! BSDSOCKET */
+
+#endif

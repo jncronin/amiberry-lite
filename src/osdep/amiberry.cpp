@@ -2275,7 +2275,9 @@ void target_execute(const char* command)
 void target_run()
 {
 	// Reset counter for access violations
+#ifndef __GAMEKID__
 	init_max_signals();
+#endif
 }
 
 void target_quit()
@@ -5007,7 +5009,7 @@ int main(int argc, char* argv[])
 	}
 
 	logging_init();
-#if defined (CPU_arm)
+#if defined (CPU_arm) && !defined(__GAMEKID__)
 	memset(&action, 0, sizeof action);
 	action.sa_sigaction = signal_segv;
 	action.sa_flags = SA_SIGINFO;

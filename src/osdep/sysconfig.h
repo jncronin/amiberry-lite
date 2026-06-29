@@ -79,7 +79,9 @@
 #define ACTION_REPLAY /* Action Replay 1/2/3 support */
 #define PICASSO96 /* Picasso96 display card emulation */
 #define UAEGFX_INTERNAL /* built-in libs:picasso96/uaegfx.card */
+#ifndef __GAMEKID__
 #define BSDSOCKET /* bsdsocket.library emulation */
+#endif
 #define CAPS /* CAPS-image support */
 #define SCP /* SuperCardPro */
 #define FDI2RAW /* FDI 1.0 and 2.x image support */
@@ -630,7 +632,7 @@ typedef char TCHAR;
 #define _timezone           timezone
 #define _daylight           daylight
 // Ftello and fseeko on OSX are alerady 64bit
-#if defined ANDROID || defined __MACH__
+#if defined ANDROID || defined __MACH__ || defined(__GAMEKID__)
 #define _ftelli64(x)        ftello(x)
 #define _fseeki64(x,y,z)    fseeko(x,y,z)
 #else
