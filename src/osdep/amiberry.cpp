@@ -654,13 +654,19 @@ static void setcursorshape(const int monid)
 			SDL_ShowCursor(SDL_DISABLE);
 	}
 	else if (!picasso_setwincursor(monid)) {
+#ifndef __GAMEKID__
 		SDL_SetCursor(normalcursor);
 		SDL_ShowCursor(SDL_ENABLE);
+#endif
 	}
 }
 
 void set_showcursor(const BOOL v)
 {
+#ifdef __GAMEKID__
+	SDL_ShowCursor(SDL_DISABLE);
+	return;
+#else
 	if (v) {
 		const int vv = SDL_ShowCursor(SDL_ENABLE);
 		if (vv > 1) {
@@ -679,6 +685,7 @@ void set_showcursor(const BOOL v)
 			}
 		}
 	}
+#endif
 }
 
 void releasecapture(const AmigaMonitor* mon)
@@ -797,7 +804,9 @@ static void setmouseactive2(AmigaMonitor* mon, int active, const bool allowpause
 				recapture = 0;
 				return;
 			}
+#ifndef __GAMEKID__
 			SDL_SetCursor(normalcursor);
+#endif
 		} else {
 			recapture = 0;
 		}

@@ -364,7 +364,9 @@ void amiberry_gui_init()
 		SDL_RenderSetLogicalSize(mon->gui_renderer, GUI_HEIGHT, GUI_WIDTH);
 
 	SDL_SetRelativeMouseMode(SDL_FALSE);
+#ifndef __GAMEKID__
 	SDL_ShowCursor(SDL_ENABLE);
+#endif
 
 	SDL_RaiseWindow(mon->gui_window);
 
