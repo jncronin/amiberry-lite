@@ -1300,6 +1300,19 @@ int save_state (const TCHAR *filename, const TCHAR *description)
 
 void savestate_quick(int slot, int save)
 {
+#ifdef __GAMEKID__
+	// For GK, create a savefile name based upon the disk 0 name either in
+	//  the diskswap system (if present) or the DF0 file
+	std::string cfname = currprefs.dfxlist[0][0] ? std::string(currprefs.dfxlist[0]) : std::string(currprefs.floppyslots[0].df);
+	auto last_slash = cfname.find_last_of("/\\");
+	if(last_slash != std::string::npos)
+	{
+		cfname = cfname.substr(last_slash + 1);
+	}
+	cfname = "/home/user/Amiberry-Lite/savestates/" + cfname + "." + std::to_string(slot) + ".uss";
+	printf("savestate_quick: will use: %s\n", cfname.c_str());
+	_tcscpy(savestate_fname, cfname.c_str());
+#else
 	if (path_statefile[0]) {
 		_tcscpy(savestate_fname, path_statefile);
 	}
@@ -1322,6 +1335,7 @@ void savestate_quick(int slot, int save)
 	if (slot > 0) {
 		_sntprintf (savestate_fname + i, sizeof savestate_fname + i, _T("_%d.uss"), slot);
 	}
+#endif
 	savestate_flags = 0;
 	if (save) {
 		write_log (_T("saving '%s'\n"), savestate_fname);
@@ -1330,8 +1344,10 @@ void savestate_quick(int slot, int save)
 		savestate_flags |= SAVESTATE_ALWAYSUSEPATH;
 		save_state (savestate_fname, _T(""));
 #ifdef AMIBERRY
+#ifndef __GAMEKID__
 		if (create_screenshot())
 			save_thumb(screenshot_filename);
+#endif
 #endif
 	} else {
 		if (!zfile_exists (savestate_fname)) {

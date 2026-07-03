@@ -1429,6 +1429,11 @@ static int drive_insert (drive *drv, struct uae_prefs *p, int dnum, const TCHAR 
 		zfile_fseek (drv->diskfile, 0, SEEK_END);
 		size = zfile_ftell32(drv->diskfile);
 		zfile_fseek (drv->diskfile, 0, SEEK_SET);
+
+		if(size == 0x7fffffff || size < 0)
+			return 0;
+
+		//printf("DRIVE_INSERT: %s, size: %d\n", fname_in, size);
 	}
 
 	canauto = 0;
