@@ -98,7 +98,9 @@ if(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
 endif()
 
 # Install system and packaging
-include(GNUInstallDirs)
+if(NOT GAMEKID)
+	include(GNUInstallDirs)
+endif()
 include(cmake/StandardProjectSettings.cmake)
 include(cmake/SourceFiles.cmake)
 include(cmake/Dependencies.cmake)

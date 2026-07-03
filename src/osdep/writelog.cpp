@@ -471,6 +471,17 @@ TCHAR* write_log_get_ts(void)
 	return out;
 }
 
+//#if __GAMEKID__
+#if 1
+void write_log(const char *format, ...)
+{
+	va_list parms;
+
+	va_start(parms, format);
+	vprintf(format, parms);
+	va_end(parms);
+}
+#else
 void write_log(const char* format, ...)
 {
 	int count;
@@ -523,6 +534,7 @@ void write_log(const char* format, ...)
 	if (always_flush_log)
 		flush_log();
 }
+#endif
 
 void flush_log()
 {

@@ -310,8 +310,12 @@ static void SDL2_init()
 			mon->amiga_window = SDL_CreateWindow("Amiberry",
 				SDL_WINDOWPOS_CENTERED,
 				SDL_WINDOWPOS_CENTERED,
+#ifdef __GAMEKID__
+				sdl_mode.w, sdl_mode.h,
+#else
 				800,
 				600,
+#endif
 				mode);
 		}
 		else
@@ -347,7 +351,11 @@ static void SDL2_init()
 #else
 	if (mon->amiga_renderer == nullptr)
 	{
+#ifdef __GAMEKID__
+		Uint32 flags = 0;
+#else
 		Uint32 flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
+#endif
 		mon->amiga_renderer = SDL_CreateRenderer(mon->amiga_window, -1, flags);
 		check_error_sdl(mon->amiga_renderer == nullptr, "Unable to create a renderer:");
 	}
@@ -365,8 +373,8 @@ static bool SDL2_alloctexture(int monid, int w, int h, const int depth)
 {
 	if (w == 0 || h == 0)
 		return false;
+	write_log("DEBUG: SDL2_alloctexture called with w=%d, h=%d, depth=%d\n", w, h, depth);
 #ifdef USE_OPENGL
-	write_log("DEBUG: SDL2_alloctexture called with w=%d, h=%d\n", w, h);
 	if (crtemu_tv)
 		destroy_crtemu();
 	if (crtemu_tv == nullptr) {

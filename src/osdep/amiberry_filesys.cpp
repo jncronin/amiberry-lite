@@ -138,7 +138,11 @@ static bool has_logged_iconv_fail = false;
         char* dst_ptr = buf.data();
         size_t dst_size = buf.size();
 
-        size_t res = iconv(iconv_handle, (const char **)&src_ptr, &src_size, &dst_ptr, &dst_size);
+        size_t res = iconv(iconv_handle,
+#ifdef __GAMEKID__
+			(const char **)
+#endif
+			&src_ptr, &src_size, &dst_ptr, &dst_size);
 
         if (res == size_t(-1)) {
             switch (errno) {

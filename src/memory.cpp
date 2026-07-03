@@ -53,7 +53,7 @@ addrbank* get_mem_bank_real(uaecptr addr)
 	return ab;
 }
 #endif
-bool canbang;
+bool canbang = true;
 uaecptr highest_ram;
 static bool rom_write_enabled;
 #ifdef JIT
