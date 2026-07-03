@@ -422,6 +422,11 @@ bool my_kbd_handler(int keyboard, int scancode, int newstate, bool alwaysrelease
 			inputdevice_add_inputcode(AKS_DISK_NEXT0, 1, nullptr);
 			scancode = 0;
 		}
+		if(scancode >= 352 && scancode <= 355)
+		{
+			inputdevice_add_inputcode(AKS_DISKSWAPPER_INSERT0 + (scancode - 352), 1, nullptr);
+			scancode = 0;
+		}
 		if(scancode >= 360 && scancode < 370)
 		{
 			inputdevice_add_inputcode(AKS_STATESAVEQUICK + 2 * (scancode - 360), 1, nullptr);
@@ -435,6 +440,11 @@ bool my_kbd_handler(int keyboard, int scancode, int newstate, bool alwaysrelease
 		if(scancode == 380)
 		{
 			inputdevice_add_inputcode(AKS_PAUSE, 1, nullptr);
+			scancode = 0;
+		}
+		if(scancode == 381)
+		{
+			inputdevice_add_inputcode(AKS_QUIT, 1, nullptr);
 			scancode = 0;
 		}
 #endif
