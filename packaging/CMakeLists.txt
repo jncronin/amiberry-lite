@@ -54,7 +54,9 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/docs/README.md")
 
 # Strip binaries
-set(CPACK_STRIP_FILES "YES")
+if(NOT GAMEKID)
+    set(CPACK_STRIP_FILES "YES")
+endif()
 
 # Generator selection per platform
 if (CMAKE_SYSTEM_NAME MATCHES "Darwin")

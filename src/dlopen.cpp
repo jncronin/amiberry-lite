@@ -22,6 +22,10 @@
 
 UAE_DLHANDLE uae_dlopen(const TCHAR *path)
 {
+#ifdef __GAMEKID__
+	return NULL;
+#endif
+
 	UAE_DLHANDLE result;
 	if (path == NULL || path[0] == _T('\0')) {
 		write_log(_T("DLOPEN: No path given\n"));
