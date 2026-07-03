@@ -116,5 +116,8 @@ if(GAMEKID)
 		iconv
 		freetype
 		ogg
+		SDL2
+		GKGL
+		GL
 	)
 endif()
