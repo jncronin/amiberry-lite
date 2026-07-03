@@ -6274,6 +6274,15 @@ int disk_prevnext (int drive, int dir)
 		return 0;
 	disk_prevnext_name (img, dir);
 	_tcscpy (changed_prefs.floppyslots[drive].df, img);
+
+	auto img_s = std::string(img);
+	auto last_slash = img_s.find_last_of("/\\");
+	if(last_slash != std::string::npos)
+	{
+		img_s = img_s.substr(last_slash + 1);
+	}
+	printf("DF%d: Load %s\n", drive, img_s.c_str());
+
 	return 1;
 }
 

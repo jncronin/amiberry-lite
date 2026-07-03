@@ -410,6 +410,35 @@ bool my_kbd_handler(int keyboard, int scancode, int newstate, bool alwaysrelease
 			}
 		}
 
+#ifdef __GAMEKID__
+		// hardwired GK constants
+		if (scancode == 350)
+		{
+			inputdevice_add_inputcode(AKS_DISK_PREV0, 1, nullptr);
+			scancode = 0;
+		}
+		if (scancode == 351)
+		{
+			inputdevice_add_inputcode(AKS_DISK_NEXT0, 1, nullptr);
+			scancode = 0;
+		}
+		if(scancode >= 360 && scancode < 370)
+		{
+			inputdevice_add_inputcode(AKS_STATESAVEQUICK + 2 * (scancode - 360), 1, nullptr);
+			scancode = 0;
+		}
+		if(scancode >= 370 && scancode < 380)
+		{
+			inputdevice_add_inputcode(AKS_STATERESTOREQUICK + 2 * (scancode - 370), 1, nullptr);
+			scancode = 0;
+		}
+		if(scancode == 380)
+		{
+			inputdevice_add_inputcode(AKS_PAUSE, 1, nullptr);
+			scancode = 0;
+		}
+#endif
+
 		if (enter_gui_key.scancode && scancode == enter_gui_key.scancode)
 		{
 			if ((enter_gui_key.modifiers.lctrl || enter_gui_key.modifiers.rctrl) == ctrl_state

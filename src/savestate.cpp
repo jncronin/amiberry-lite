@@ -66,6 +66,10 @@
 #include "fsdb.h"
 #include "gfxboard.h"
 
+#ifdef __GAMEKID__
+#include "gk.h"
+#endif
+
 int savestate_state = 0;
 static int savestate_first_capture;
 
