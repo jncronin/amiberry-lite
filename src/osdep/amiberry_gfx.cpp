@@ -358,6 +358,10 @@ static void SDL2_init()
 #endif
 		mon->amiga_renderer = SDL_CreateRenderer(mon->amiga_window, -1, flags);
 		check_error_sdl(mon->amiga_renderer == nullptr, "Unable to create a renderer:");
+
+		SDL_RendererInfo ri;
+		SDL_GetRendererInfo(mon->amiga_renderer, &ri);
+		write_log("SDL2: using renderer %s\n", ri.name);
 	}
 	DPIHandler::set_render_scale(mon->amiga_renderer);
 #endif
