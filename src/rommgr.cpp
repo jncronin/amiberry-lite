@@ -82,6 +82,15 @@ void romlist_add (const TCHAR *path, struct romdata *rd)
 	}
 }
 
+void romlist_dump()
+{
+	for(auto i = 0; i < romlist_cnt; i++)
+	{
+		const auto crl = &rl[i];
+		printf("%d: %s: %s\n", i, crl->path, crl->rd->name);
+	}
+}
+
 struct romdata *getromdatabypath (const TCHAR *path)
 {
 	int i;

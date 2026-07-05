@@ -4692,6 +4692,8 @@ static void romlist_add2(const TCHAR* path, romdata* rd)
 	romlist_add(path, rd);
 }
 
+void romlist_dump();
+
 void read_rom_list(bool initial)
 {
 	int size, size2;
@@ -4747,6 +4749,8 @@ void read_rom_list(bool initial)
 	}
 	romlist_add(nullptr, nullptr);
 	regclosetree(fkey);
+
+	romlist_dump();
 }
 
 void target_getdate(int* y, int* m, int* d)
