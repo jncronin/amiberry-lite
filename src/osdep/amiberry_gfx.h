@@ -11,7 +11,11 @@
 #define RTG_MODE_INTEGER_SCALE 3
 
 #define GUI_WIDTH  800
+#ifdef __GAMEKID__
+#define GUI_HEIGHT 480
+#else
 #define GUI_HEIGHT 720
+#endif
 
 #define DISPLAY_SIGNAL_SETUP 				1
 #define DISPLAY_SIGNAL_SUBSHUTDOWN 			2
