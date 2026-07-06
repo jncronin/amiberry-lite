@@ -89,6 +89,7 @@ static int savestate_flags;
 
 TCHAR savestate_fname[MAX_DPATH];
 TCHAR path_statefile[MAX_DPATH];
+TCHAR def_savestate_fname[MAX_DPATH];
 
 #define STATEFILE_ALLOC_SIZE 600000
 static int statefile_alloc;
@@ -1300,42 +1301,58 @@ int save_state (const TCHAR *filename, const TCHAR *description)
 
 void savestate_quick(int slot, int save)
 {
-#ifdef __GAMEKID__
-	// For GK, create a savefile name based upon the disk 0 name either in
-	//  the diskswap system (if present) or the DF0 file
-	std::string cfname = currprefs.dfxlist[0][0] ? std::string(currprefs.dfxlist[0]) : std::string(currprefs.floppyslots[0].df);
-	auto last_slash = cfname.find_last_of("/\\");
-	if(last_slash != std::string::npos)
+	if(slot == -1)
 	{
-		cfname = cfname.substr(last_slash + 1);
-	}
-	cfname = "/home/user/Amiberry-Lite/savestates/" + cfname + "." + std::to_string(slot) + ".uss";
-	printf("savestate_quick: will use: %s\n", cfname.c_str());
-	_tcscpy(savestate_fname, cfname.c_str());
-#else
-	if (path_statefile[0]) {
-		_tcscpy(savestate_fname, path_statefile);
-	}
-	int i, len = uaetcslen(savestate_fname);
-	i = len - 1;
-	while (i >= 0 && savestate_fname[i] != '_') {
-		i--;
-	}
-	if (i < len - 6 || i <= 0) { /* "_?.uss" */
-		i = len - 1;
-		while (i >= 0 && savestate_fname[i] != '.') {
-			i--;
+		if(def_savestate_fname[0])
+		{
+			// use the default name
+			_tcscpy(savestate_fname, def_savestate_fname);
+			printf("savestate_quick: will use: %s\n", savestate_fname);
 		}
-		if (i <= 0) {
-			write_log (_T("savestate name skipped '%s'\n"), savestate_fname);
+		else
+		{
 			return;
 		}
 	}
-	_tcscpy (savestate_fname + i, _T(".uss"));
-	if (slot > 0) {
-		_sntprintf (savestate_fname + i, sizeof savestate_fname + i, _T("_%d.uss"), slot);
-	}
+	else
+	{
+#ifdef __GAMEKID__
+		// For GK, create a savefile name based upon the disk 0 name either in
+		//  the diskswap system (if present) or the DF0 file
+		std::string cfname = currprefs.dfxlist[0][0] ? std::string(currprefs.dfxlist[0]) : std::string(currprefs.floppyslots[0].df);
+		auto last_slash = cfname.find_last_of("/\\");
+		if(last_slash != std::string::npos)
+		{
+			cfname = cfname.substr(last_slash + 1);
+		}
+		cfname = "/home/user/Amiberry-Lite/savestates/" + cfname + "." + std::to_string(slot) + ".uss";
+		printf("savestate_quick: will use: %s\n", cfname.c_str());
+		_tcscpy(savestate_fname, cfname.c_str());
+#else
+		if (path_statefile[0]) {
+			_tcscpy(savestate_fname, path_statefile);
+		}
+		int i, len = uaetcslen(savestate_fname);
+		i = len - 1;
+		while (i >= 0 && savestate_fname[i] != '_') {
+			i--;
+		}
+		if (i < len - 6 || i <= 0) { /* "_?.uss" */
+			i = len - 1;
+			while (i >= 0 && savestate_fname[i] != '.') {
+				i--;
+			}
+			if (i <= 0) {
+				write_log (_T("savestate name skipped '%s'\n"), savestate_fname);
+				return;
+			}
+		}
+		_tcscpy (savestate_fname + i, _T(".uss"));
+		if (slot > 0) {
+			_sntprintf (savestate_fname + i, sizeof savestate_fname + i, _T("_%d.uss"), slot);
+		}
 #endif
+	}
 	savestate_flags = 0;
 	if (save) {
 		write_log (_T("saving '%s'\n"), savestate_fname);

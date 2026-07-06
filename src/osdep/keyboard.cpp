@@ -447,6 +447,11 @@ bool my_kbd_handler(int keyboard, int scancode, int newstate, bool alwaysrelease
 			inputdevice_add_inputcode(AKS_QUIT, 1, nullptr);
 			scancode = 0;
 		}
+		if(scancode == 382)
+		{
+			inputdevice_add_inputcode(AKS_STATESAVEQUICKSTARTUP, 1, nullptr);
+			scancode = 0;
+		}
 #endif
 
 		if (enter_gui_key.scancode && scancode == enter_gui_key.scancode)

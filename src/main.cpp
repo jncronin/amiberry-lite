@@ -1075,6 +1075,8 @@ static void parse_cmdline (int argc, TCHAR **argv)
 				}
 				set_last_active_config(txt);
 				xfree(txt);
+
+				strncat(def_savestate_fname, savestate_fname, MAX_DPATH - 1);
 #endif
 			}
 			loaded = true;

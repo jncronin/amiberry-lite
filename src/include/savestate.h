@@ -268,6 +268,7 @@ extern bool savestate_check(void);
 extern int savestate_state;
 extern TCHAR savestate_fname[MAX_DPATH];
 extern TCHAR path_statefile[MAX_DPATH];
+extern TCHAR def_savestate_fname[MAX_DPATH];  // stores the filename passed on startup via --statefile and never changes
 extern struct zfile *savestate_file;
 
 STATIC_INLINE bool isrestore(void)

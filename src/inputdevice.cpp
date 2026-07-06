@@ -4708,6 +4708,7 @@ static bool needcputrace (int code)
 	case AKS_STATESAVEQUICK8:
 	case AKS_STATESAVEQUICK9:
 	case AKS_STATESAVEDIALOG:
+	case AKS_STATESAVEQUICKSTARTUP:
 		return true;
 	}
 	return false;
@@ -5025,6 +5026,9 @@ static bool inputdevice_handle_inputcode2(int monid, int code, int state, const 
 	case AKS_STATESAVEQUICK8:
 	case AKS_STATESAVEQUICK9:
 		savestate_quick ((code - AKS_STATESAVEQUICK) / 2, 1);
+		break;
+	case AKS_STATESAVEQUICKSTARTUP:
+		savestate_quick (-1, 1);
 		break;
 	case AKS_STATERESTOREQUICK:
 	case AKS_STATERESTOREQUICK1:
