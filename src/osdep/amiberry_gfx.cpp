@@ -3275,10 +3275,13 @@ void auto_crop_image()
 		int cw, ch, cx, cy, crealh = 0;
 		get_custom_limits(&cw, &ch, &cx, &cy, &crealh);
 
+// For GK - force auto crop always to ensure it is properly applied on game load
+#ifndef __GAMEKID__
 		if (!force_auto_crop && last_autocrop == currprefs.gfx_auto_crop && last_cw == cw && last_ch == ch && last_cx == cx && last_cy == cy)
 		{
 			return;
 		}
+#endif
 
 		last_cw = cw;
 		last_ch = ch;
